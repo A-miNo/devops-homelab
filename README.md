@@ -11,3 +11,4 @@ Requirements
 - DHCP server to manage address space
 - traefik as a CNI
 - DNS server to manage namespace
+- CEPH as CSI
