@@ -13,6 +13,9 @@ On your internet connected device downloaded your dependencies (Packages will be
 - docker run -d -p 6000:5000 --restart always --name registry-airgapped registry:2
 - for image in `talosctl image default`; do docker pull $image; done
 - for image in `talosctl image default`; do \
+    docker save $image $image.tar; \
+  done
+- for image in `talosctl image default`; do \
     docker tag $image `echo $image | sed -E 's#^[^/]+/#127.0.0.1:6000/#'`; \
   done
 - for image in `talosctl image default`; do \
