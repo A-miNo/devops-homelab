@@ -8,6 +8,8 @@ On your internet connected device downloaded your dependencies (Packages will be
 
 - sudo apt-get install --download-only docker.io
 - sudo docker pull registry:2
+- sudo docker save registry:2 -o registry.tar
+- sudo docker load -i registry.tar
 - docker run -d -p 6000:5000 --restart always --name registry-airgapped registry:2
 - for image in `talosctl image default`; do docker pull $image; done
 - for image in `talosctl image default`; do \
