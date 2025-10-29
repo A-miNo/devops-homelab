@@ -5,3 +5,14 @@ On your internet connected device downloaded your dependencies (Packages will be
 - wget https://github.com/siderolabs/talos/releases/download/v1.11.3/talosctl-linux-amd64 -O /tmp/talosctl-linux-amd64
 - chmod +x /tmp/talosctl-linux-amd64
 - sudo cp /tmp/talosctl-linux-amd64 /usr/local/bin/talosctl
+
+- sudo apt-get install --download-only docker.io
+- sudo docker pull registry:2
+- docker run -d -p 6000:5000 --restart always --name registry-airgapped registry:2
+- for image in `talosctl image default`; do docker pull $image; done
+- for image in `talosctl image default`; do \
+    docker tag $image `echo $image | sed -E 's#^[^/]+/#127.0.0.1:6000/#'`; \
+  done
+- for image in `talosctl image default`; do \
+    docker push `echo $image | sed -E 's#^[^/]+/#127.0.0.1:6000/#'`; \
+  done
