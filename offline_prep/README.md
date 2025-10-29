@@ -7,13 +7,13 @@ On your internet connected device downloaded your dependencies (Packages will be
 - sudo cp /tmp/talosctl-linux-amd64 /usr/local/bin/talosctl
 
 - sudo apt-get install --download-only docker.io
-- sudo docker pull registry:2
-- sudo docker save registry:2 -o registry.tar
-- sudo docker load -i registry.tar
+- echo registry:2 > image_list.txt
+- talosctl image default >> image_list.txt
+- ./docker-image-puller.sh image_list.txt
 - docker run -d -p 6000:5000 --restart always --name registry-airgapped registry:2
 - for image in `talosctl image default`; do docker pull $image; done
 - for image in `talosctl image default`; do \
-    docker save $image $image.tar; \
+    docker save $image -o $image.tar; \
   done
 - for image in `talosctl image default`; do \
     docker tag $image `echo $image | sed -E 's#^[^/]+/#127.0.0.1:6000/#'`; \
